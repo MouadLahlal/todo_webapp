@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import { useEffect, useState } from "react";
-import { getProgress, getStatistic } from "../../data/api";
+import { getProgress, getStatistic } from "../../api/stats";
 
 const Dashboard = () => {
   const theme = useTheme();
