@@ -183,7 +183,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
           </Box>
-          <Box sx={{ position: 'fixed', bottom: 100, marginLeft: 10 }}>
+          <Box sx={{ position: 'fixed', bottom: '1%', marginLeft: 10 }}>
             <Button type="submit" color="secondary" variant="contained" style={{ padding: "20px 20px", borderRadius: 25 }} onClick={() => setModalOpen(true)}>
               <AddCircleOutlineOutlinedIcon sx={{ fontSize: "35px" }} />
             </Button>
