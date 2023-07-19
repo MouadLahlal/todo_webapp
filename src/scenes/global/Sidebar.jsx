@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -16,9 +16,11 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import TodayIcon from '@mui/icons-material/Today';
+import Modal from "../../components/Modal";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -43,6 +45,9 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [dialog, setDialog] = useState(false);
+  const [priority, setPriority] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <Box
@@ -83,7 +88,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  TO DO
+                  TODOCAST
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -178,8 +183,14 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
           </Box>
+          <Box sx={{ position: 'fixed', bottom: 100, marginLeft: 10 }}>
+            <Button type="submit" color="secondary" variant="contained" style={{ padding: "20px 20px", borderRadius: 25 }} onClick={() => setModalOpen(true)}>
+              <AddCircleOutlineOutlinedIcon sx={{ fontSize: "35px" }} />
+            </Button>
+          </Box>
         </Menu>
       </ProSidebar>
+      {modalOpen && <Modal setOpenModal={setModalOpen} />}
     </Box>
   );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -20,15 +20,19 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
+  const navigate = useNavigate();
+  const paths = ['/dashboard', '/team', '/contacts', '/invoices', '/form', '/faq', '/calendar'];
   
   useEffect(() => {
     async function req() {
       const logged = await postCheckLogged();
       if (logged.status) {
         setIsLogged(true);
+        if (!paths.includes(window.location.pathname)) {
+          navigate('/dashboard');
+        }
       }
     }
-
     req();
   }, []);
 
@@ -51,6 +55,7 @@ function App() {
                     <Route path="/form" element={<Form />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/calendar" element={<Calendar />} />
+                    <Route path="*" element={<Dashboard />} />
                   </Routes>
                 </main>
               </> 
@@ -61,6 +66,7 @@ function App() {
                   <Routes>
                     <Route path="/login" element={<Login setlogged={setIsLogged}/>} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="*" element={<Login setlogged={setIsLogged} />} />
                   </Routes>
                 </main>
               </>
