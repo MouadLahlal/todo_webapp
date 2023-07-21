@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Alert, Box, Snackbar, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
@@ -18,24 +18,31 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Fragment, useEffect, useState } from "react";
-import { getTodaysTask, postDone, postUndone } from "../../api/tasks";
+import { getListTasks, postDone, postEditTask, postUndone } from "../../api/tasks";
+import { useParams } from "react-router-dom";
 import EditTaskModal from "../../components/EditModal";
 
-const Today = () => {
+const UList = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [checked, setChecked] = useState([0]);
   const [tasks, setTasks] = useState([]);
+  const [listName, setListName] = useState("");
   const [openPopup, setOpenPopup] = useState(false);
+  const params = useParams();
 
   useEffect(() => {
-    const req = async () => {
-      let response = await getTodaysTask();
-      setTasks(response.content);
+    let name = params.list;
+    if (name != listName) {
+      handleListChange();
+      setListName(name);
     }
-    
-    req();
-  }, []);
+  });
+
+  const handleListChange = async () => {
+    let response = await getListTasks(params.list);
+    setTasks(response.content);
+  }
 
   const handleToggle = (task) => async () => {
     const currentIndex = checked.indexOf(task.task);
@@ -56,9 +63,12 @@ const Today = () => {
     setChecked(newChecked);
   };
 
+  const handleEdit = async () => {
+  }
+
   return (
     <Box m="20px">
-      <Header title="TODAY'S TASK" subtitle="" />
+      <Header title={params.list.toUpperCase()} subtitle="" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -83,9 +93,12 @@ const Today = () => {
 
             return (
               <ListItem
-                key={task}
+                key={labelId}
                 secondaryAction={
                   <>
+                    {/* <IconButton edge="end" aria-label="edit" style={{ marginRight: 10 }}>
+                      <EditOutlinedIcon />
+                    </IconButton> */}
                     <EditTaskModal taskOBJ={task} openPopup={openPopup} setOpenPopup={setOpenPopup} />
                   </>
                 }
@@ -104,14 +117,19 @@ const Today = () => {
                   </ListItemIcon>
                   <ListItemText id={labelId} primary={ 
                     <Fragment>
-                      <Typography variant="h5" fontWeight="600" sx={{ textDecoration: task.done === 1 ? 'line-through' : '' }}>
+                      <Typography variant="h4" fontWeight="900" sx={{ textDecoration: task.done === 1 ? 'line-through' : '' }}>
                         {task.task}
                       </Typography>
                     </Fragment>
                   } secondary={
-                    <Typography fontWeight="600"> {task.note} </Typography>
-                  } />
+                    <Typography fontWeight="100"> {task.note} </Typography>
+                  } sx={{ marginLeft: "-30px" }} />
                 </ListItemButton>
+                <Snackbar open={openPopup} autoHideDuration={6000} onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }}>
+                  <Alert onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }} severity="success" sx={{ width: '100%', fontSize: '16px', fontWeight: 'bold' }}>
+                      Task modified successfully
+                  </Alert>
+                </Snackbar>
               </ListItem>
             );
           })}
@@ -121,4 +139,4 @@ const Today = () => {
   );
 };
 
-export default Today;
+export default UList;

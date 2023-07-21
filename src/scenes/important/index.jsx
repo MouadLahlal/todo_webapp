@@ -18,10 +18,10 @@ import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Fragment, useEffect, useState } from "react";
-import { getTodaysTask, postDone, postUndone } from "../../api/tasks";
+import { getImportantTask, postDone, postUndone } from "../../api/tasks";
 import EditTaskModal from "../../components/EditModal";
 
-const Today = () => {
+const Important = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [checked, setChecked] = useState([0]);
@@ -30,7 +30,7 @@ const Today = () => {
 
   useEffect(() => {
     const req = async () => {
-      let response = await getTodaysTask();
+      let response = await getImportantTask();
       setTasks(response.content);
     }
     
@@ -58,7 +58,7 @@ const Today = () => {
 
   return (
     <Box m="20px">
-      <Header title="TODAY'S TASK" subtitle="" />
+      <Header title="IMPORTANT TASKS" subtitle="" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -121,4 +121,4 @@ const Today = () => {
   );
 };
 
-export default Today;
+export default Important;

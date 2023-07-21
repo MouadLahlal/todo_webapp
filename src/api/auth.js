@@ -1,7 +1,7 @@
 import { apiData } from './settings';
 
 export const postLogin = async (username, password) => {
-    const url = `https://${apiData.apiHost}/auth/login`;
+    const url = `${apiData.apiHost}/auth/login`;
     const data = `{
         "username": "${username}",
         "password": "${password}"
@@ -17,7 +17,7 @@ export const postLogin = async (username, password) => {
 }
 
 export const postSignup = async (username, email, password) => {
-    const url = `https://${apiData.apiHost}/auth/signup`;
+    const url = `${apiData.apiHost}/auth/signup`;
     const data = `{
         "username": "${username}",
         "email": "${email}",
@@ -34,7 +34,7 @@ export const postSignup = async (username, email, password) => {
 }
 
 export const postCheckLogged = async () => {
-    const url = `https://${apiData.apiHost}/auth/login/checkLogged`;
+    const url = `${apiData.apiHost}/auth/login/checkLogged`;
     const response = await fetch(url, {
         method: 'POST',
         headers: {

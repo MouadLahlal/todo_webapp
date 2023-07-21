@@ -1,6 +1,5 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
 import AllInclusiveOutlinedIcon from '@mui/icons-material/AllInclusiveOutlined';
 import LibraryAddCheckOutlinedIcon from '@mui/icons-material/LibraryAddCheckOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
@@ -39,35 +38,8 @@ const Dashboard = () => {
         gridAutoRows="140px"
         gap="20px"
       >
-        {/* ROW 1 */}
-        {/*<Box
-          gridColumn="span 7"
-          gridRow="span 2"
-          backgroundColor={colors.primary[400]}
-        >
-          <Box
-            mt="25px"
-            p="0 30px"
-            display="flex "
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Box>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Your Statistic
-              </Typography>
-            </Box>
-          </Box>
-          <Box height="250px" m="-20px 0 0 0">
-            <LineChart isDashboard={true} />
-          </Box>
-        </Box>*/}
         <Box
-          gridColumn="span 3"
+          gridColumn={window.innerWidth <= 768 ? "span 12" : "span 3"}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           p="30px"
@@ -91,10 +63,8 @@ const Dashboard = () => {
             </Typography>
           </Box>
         </Box>
-
-        {/* ROW 2 */}
         <Box
-          gridColumn="span 3"
+          gridColumn={window.innerWidth <= 768 ? "span 12" : "span 3"}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -114,7 +84,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={window.innerWidth <= 768 ? "span 12" : "span 3"}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -134,7 +104,7 @@ const Dashboard = () => {
           />
         </Box>
         <Box
-          gridColumn="span 3"
+          gridColumn={window.innerWidth <= 768 ? "span 12" : "span 3"}
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           display="flex"

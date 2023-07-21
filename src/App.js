@@ -15,22 +15,19 @@ import Today from "./scenes/today";
 import Login from "./scenes/auth/login";
 import Signup from "./scenes/auth/signup";
 import { postCheckLogged } from "./api/auth";
+import Important from "./scenes/important";
+import UList from "./scenes/list";
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
-  const navigate = useNavigate();
-  const paths = ['/dashboard', '/team', '/contacts', '/invoices', '/form', '/faq', '/calendar'];
   
   useEffect(() => {
     async function req() {
       const logged = await postCheckLogged();
       if (logged.status) {
         setIsLogged(true);
-        if (!paths.includes(window.location.pathname)) {
-          navigate('/dashboard');
-        }
       }
     }
     req();
@@ -45,21 +42,21 @@ function App() {
             ? 
               <>
                 <Sidebar isSidebar={isSidebar} />
-                <main className="content">
+                <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
                   <Topbar setIsSidebar={setIsSidebar} />
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/team" element={<Today />} />
-                    <Route path="/contacts" element={<Contacts />} />
-                    <Route path="/invoices" element={<Invoices />} />
+                    <Route path="/today" element={<Today />} />
+                    <Route path="/important" element={<Important />} />
                     <Route path="/form" element={<Form />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/lists/:list" element={<UList />} />
                     <Route path="*" element={<Dashboard />} />
                   </Routes>
                 </main>
               </> 
-            : 
+            :
               <>
                 <main className="content">
                   <Topbar setIsSidebar={setIsSidebar} />
