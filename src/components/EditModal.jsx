@@ -141,17 +141,12 @@ export default function EditTaskModal({taskOBJ, openPopup, setOpenPopup}) {
             </TextField>
         </DialogContent>
         <DialogActions>
-            <Button variant='outlined' onClick={handleClose}>Cancel</Button>
-            <Button variant='outlined' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
+            <Button variant='contained' onClick={handleClose}>Cancel</Button>
+            <Button variant='contained' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
               Open success snackbar
             </Button>
         </DialogActions>
       </Dialog>
-      {/* <Snackbar open={openPopup} autoHideDuration={6000} onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }}>
-        <Alert onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }} severity="success" sx={{ width: '100%', fontSize: '16px', fontWeight: 'bold' }}>
-            Task modified successfully
-        </Alert>
-      </Snackbar> */}
     </div>
   );
 }

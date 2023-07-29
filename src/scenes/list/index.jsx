@@ -1,13 +1,5 @@
 import { Alert, Box, Snackbar, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Header from "../../components/Header";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,8 +7,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
 import { Fragment, useEffect, useState } from "react";
 import { getListTasks, postDone, postEditTask, postUndone } from "../../api/tasks";
 import { useParams } from "react-router-dom";
@@ -42,6 +32,15 @@ const UList = () => {
   const handleListChange = async () => {
     let response = await getListTasks(params.list);
     setTasks(response.content);
+    if (response.content) {
+      response.content.map((task) => {
+        if (task.done === 1) {
+          const newChecked = [...checked];
+          newChecked.push(task.task);
+          setChecked(newChecked);
+        }
+      })
+    }
   }
 
   const handleToggle = (task) => async () => {
@@ -52,12 +51,10 @@ const UList = () => {
       newChecked.push(task.task);
       const done = await postDone(task.idtask);
       task.done = 1;
-      console.log(done);
     } else {
       newChecked.splice(currentIndex, 1);
       const undone = await postUndone(task.idtask);
       task.done = 0;
-      console.log(undone);
     }
 
     setChecked(newChecked);
@@ -96,9 +93,6 @@ const UList = () => {
                 key={labelId}
                 secondaryAction={
                   <>
-                    {/* <IconButton edge="end" aria-label="edit" style={{ marginRight: 10 }}>
-                      <EditOutlinedIcon />
-                    </IconButton> */}
                     <EditTaskModal taskOBJ={task} openPopup={openPopup} setOpenPopup={setOpenPopup} />
                   </>
                 }

@@ -1,13 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Header from "../../components/Header";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -15,8 +7,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
 import { Fragment, useEffect, useState } from "react";
 import { getTodaysTask, postDone, postUndone } from "../../api/tasks";
 import EditTaskModal from "../../components/EditModal";
@@ -45,12 +35,10 @@ const Today = () => {
       newChecked.push(task.task);
       const done = await postDone(task.idtask);
       task.done = 1;
-      console.log(done);
     } else {
       newChecked.splice(currentIndex, 1);
       const undone = await postUndone(task.idtask);
       task.done = 0;
-      console.log(undone);
     }
 
     setChecked(newChecked);
