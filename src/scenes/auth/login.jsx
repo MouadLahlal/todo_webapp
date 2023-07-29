@@ -1,10 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../api/auth";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Login = ({setlogged}) => {
@@ -83,6 +84,13 @@ const Login = ({setlogged}) => {
           </form>
         )}
       </Formik>
+      <Box sx={{ textAlign: 'center', marginTop: '200px' }}>
+        <Link to={"/signup"}>
+          <Typography>
+            Don't have an account? Create one.
+          </Typography>
+        </Link>
+      </Box>
     </Box>
   );
 };

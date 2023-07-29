@@ -3,12 +3,20 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import { useNavigate } from "react-router-dom";
+import { postSignup } from "../../api/auth";
 
 const Signup = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    let signed = await postSignup(values.username.toString(), values.email.toString(), values.password.toString());
+    if (signed.status) {
+      navigate('/login');
+    } else {
+      alert("Error occured");
+    }
   };
 
   return (
