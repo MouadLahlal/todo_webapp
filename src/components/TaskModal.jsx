@@ -136,7 +136,7 @@ export default function NewTaskModal() {
             </TextField>
         </DialogContent>
         <DialogActions>
-            <Button variant='outlined' onClick={handleClose}>Cancel</Button>
+            <Button variant='contained' onClick={handleClose}>Cancel</Button>
             {/*<Button onClick={handleClose}>Subscribe</Button>*/}
             <Popup task={{task, note, date, priority, list}} setModalOpen={setOpen} open={openPopup} setOpen={setOpenPopup} />
         </DialogActions>

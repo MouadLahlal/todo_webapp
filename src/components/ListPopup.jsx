@@ -33,7 +33,7 @@ export default function Popup({listName, setModalOpen, open, setOpen}) {
 
   return (
     <Stack>
-      <Button variant='outlined' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
+      <Button variant='contained' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
         Open success snackbar
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

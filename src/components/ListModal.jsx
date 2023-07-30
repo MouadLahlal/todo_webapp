@@ -53,7 +53,7 @@ export default function NewListModal() {
             />
         </DialogContent>
         <DialogActions>
-            <Button variant='outlined' onClick={handleClose}>Cancel</Button>
+            <Button variant='contained' onClick={handleClose}>Cancel</Button>
             <Popup  listName={list} setModalOpen={setOpen} open={openPopup} setOpen={setOpenPopup} />
         </DialogActions>
       </Dialog>

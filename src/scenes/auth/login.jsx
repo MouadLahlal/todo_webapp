@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -7,10 +7,18 @@ import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../api/auth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = ({setlogged}) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleFormSubmit = async (values) => {
     let logged = await postLogin(values.username.toString(), values.password.toString());
@@ -65,12 +73,25 @@ const Login = ({setlogged}) => {
               <TextField
                 fullWidth
                 variant="filled"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 label="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
                 name="password"
+                InputProps={{
+                  endAdornment: 
+                    <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }}
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 2" }}
