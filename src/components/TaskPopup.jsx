@@ -34,11 +34,11 @@ export default function Popup({task, setModalOpen, open, setOpen}) {
   return (
     <Stack>
       <Button variant='contained' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
-        Open success snackbar
+        OK
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%', fontSize: '16px', fontWeight: 'bold' }}>
-          This is a success message!
+          Task successfully created!
         </Alert>
       </Snackbar>
     </Stack>

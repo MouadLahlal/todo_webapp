@@ -59,7 +59,7 @@ export default function NewListModal() {
       </Dialog>
       <Snackbar open={openPopup} autoHideDuration={6000} onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }}>
         <Alert onClose={(event, reason) => { if (reason === 'clickaway') { return; } setOpenPopup(false) }} severity="success" sx={{ width: '100%', fontSize: '16px', fontWeight: 'bold' }}>
-            Task created successfully
+            List created successfully
         </Alert>
       </Snackbar>
     </div>

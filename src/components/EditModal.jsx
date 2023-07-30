@@ -143,7 +143,7 @@ export default function EditTaskModal({taskOBJ, openPopup, setOpenPopup}) {
         <DialogActions>
             <Button variant='contained' onClick={handleClose}>Cancel</Button>
             <Button variant='contained' onClick={handleSubmit} sx={{ marginLeft: '10px' }}>
-              Open success snackbar
+              OK
             </Button>
         </DialogActions>
       </Dialog>
