@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -16,6 +16,8 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
+  const [selected, setSelected] = useState(`${window.location.pathname.charAt(1).toUpperCase()}${window.location.pathname.replace("/", "").substring(1, window.location.pathname.length-1)}`);
+  const location = useLocation();
   
   useEffect(() => {
     async function req() {
@@ -27,6 +29,11 @@ function App() {
     req();
   }, []);
 
+  useEffect(() => {
+    let page = `${location.pathname.charAt(1).toUpperCase()}${location.pathname.replace("/", "").substring(1, location.pathname.length-1)}`
+    setSelected(page);
+  }, [location]);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -35,7 +42,7 @@ function App() {
           {isLogged
             ? 
               <>
-                <Sidebar isSidebar={isSidebar} />
+                <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} />
                 <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
                   <Topbar setIsSidebar={setIsSidebar} />
                   <Routes>
@@ -43,7 +50,7 @@ function App() {
                     <Route path="/today" element={<Today />} />
                     <Route path="/important" element={<Important />} />
                     <Route path="/lists/:list" element={<UList />} />
-                    <Route path="*" element={<Dashboard />} />
+                    <Route path="*" element={<Navigate to={'/dashboard'} replace />} />
                   </Routes>
                 </main>
               </> 
@@ -54,7 +61,7 @@ function App() {
                   <Routes>
                     <Route path="/login" element={<Login setlogged={setIsLogged}/>} />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="*" element={<Login setlogged={setIsLogged} />} />
+                    <Route path="*" element={<Navigate to={'/login'} replace />} />
                   </Routes>
                 </main>
               </>
