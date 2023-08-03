@@ -25,7 +25,7 @@ export default function Popup({listName, setModalOpen, open, setOpen}) {
   const handleSubmit = async () => {
     const added = await postNewList(listName);
     console.log(added);
-    if (added.status) {
+    if (added.ok) {
       setOpen(true);
       setModalOpen(false);
     }

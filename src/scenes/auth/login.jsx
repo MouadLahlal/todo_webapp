@@ -22,8 +22,8 @@ const Login = ({setlogged}) => {
 
   const handleFormSubmit = async (values) => {
     let logged = await postLogin(values.username.toString(), values.password.toString());
-    if (logged.status) {
-      localStorage.setItem('accessToken', logged.accessToken);
+    if (logged.ok) {
+      localStorage.setItem('accessToken', logged.body.accessToken);
       setlogged(true);
       navigate('/dashboard');
     }

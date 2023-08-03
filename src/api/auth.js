@@ -13,7 +13,8 @@ export const postLogin = async (username, password) => {
         },
         body: data
     });
-    return await response.json();
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
 }
 
 export const postSignup = async (username, email, password) => {
@@ -30,7 +31,8 @@ export const postSignup = async (username, email, password) => {
         },
         body: data
     });
-    return await response.json();
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
 }
 
 export const postCheckLogged = async () => {
@@ -42,5 +44,6 @@ export const postCheckLogged = async () => {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
     });
-    return await response.json();
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
 }

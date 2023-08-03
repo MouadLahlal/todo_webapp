@@ -12,7 +12,7 @@ const Signup = () => {
 
   const handleFormSubmit = async (values) => {
     let signed = await postSignup(values.username.toString(), values.email.toString(), values.password.toString());
-    if (signed.status) {
+    if (signed.ok) {
       navigate('/login');
     } else {
       alert("Error occured");

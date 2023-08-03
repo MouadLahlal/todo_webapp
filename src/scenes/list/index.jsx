@@ -31,9 +31,9 @@ const UList = () => {
 
   const handleListChange = async () => {
     let response = await getListTasks(params.list);
-    setTasks(response.content);
-    if (response.content) {
-      response.content.map((task) => {
+    setTasks(response.body.content);
+    if (response.body.content) {
+      response.body.content.map((task) => {
         if (task.done === 1) {
           const newChecked = [...checked];
           newChecked.push(task.task);
@@ -86,7 +86,7 @@ const UList = () => {
           {tasks && tasks.map((task) => {
             const labelId = task.idtask;
             let temp = new Date(task.expiration);
-            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate()}`;
+            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate() <= 8 ? "0":""}${temp.getDate()}`;
 
             return (
               <ListItem

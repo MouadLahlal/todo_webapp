@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -14,21 +14,46 @@ import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import TodayIcon from '@mui/icons-material/Today';
 import { getAllLists } from "../../api/lists";
 import NewListModal from "../../components/ListModal";
+import EditListModal from "../../components/EditListModal";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [cleanSelected, setCleanSelected] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
+  // let listForEdit = "";
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if (window.innerWidth <= 768) await setIsCollapsed(true);
+    setSelected(title);
+    navigate(to);
+    if (e.type === 'click') {
+    } else if (e.type === 'contextmenu') {
+      if (e.target.pathname !== '/dashboard' 
+      && e.target.pathname !== '/today' 
+      && e.target.pathname !== '/important' 
+      && e.target.pathname !== '/lists/Inbox') {
+        setModalOpen(true);
+      }
+    }
+  }
+  useEffect(() => {
+    setCleanSelected(selected.substring(selected.lastIndexOf('/')+1, selected.length).replaceAll('%20', " "));
+  }, [selected]);
   return (
     <MenuItem
-      active={selected === title}
+      active={cleanSelected === title}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
+      onClick={handleClick}
+      onContextMenu={handleClick}
       icon={icon}
     >
       <Typography>{title}</Typography>
       <Link to={to} />
+      <EditListModal listName={title} open={modalOpen} setOpen={setModalOpen} />
     </MenuItem>
   );
 };
@@ -43,8 +68,8 @@ const Sidebar = ({selected, setSelected}) => {
   useEffect(() => {
     async function req() {
       const response = await getAllLists();
-      if (response.status) {
-        setLists(response.content);
+      if (response.ok) {
+        setLists(response.body.content);
       }
     }
     req();
@@ -60,7 +85,8 @@ const Sidebar = ({selected, setSelected}) => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 5px !important",
+          // padding: "5px 35px 5px 20px !important",
+          padding: window.innerWidth <= 768 ? "5px 35px 5px 5px !important" : "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -70,7 +96,7 @@ const Sidebar = ({selected, setSelected}) => {
         }
       }}
     >
-      <ProSidebar collapsed={isCollapsed} collapsedWidth={"40px"} >
+      <ProSidebar collapsed={isCollapsed} collapsedWidth={window.innerWidth <= 768 ? "45px" : ""} width={window.innerWidth <= 768 ? window.innerWidth : ""}  >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -120,6 +146,7 @@ const Sidebar = ({selected, setSelected}) => {
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              setIsCollapsed={setIsCollapsed}
             />
             <Item
               title="Today"
@@ -127,6 +154,7 @@ const Sidebar = ({selected, setSelected}) => {
               icon={<TodayIcon />}
               selected={selected}
               setSelected={setSelected}
+              setIsCollapsed={setIsCollapsed}
             />
             <Item
               title="Important"
@@ -134,6 +162,7 @@ const Sidebar = ({selected, setSelected}) => {
               icon={<LabelOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              setIsCollapsed={setIsCollapsed}
             />
 
             {!isCollapsed && 
@@ -154,6 +183,7 @@ const Sidebar = ({selected, setSelected}) => {
               icon={<MoveToInboxOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+              setIsCollapsed={setIsCollapsed}
             />
             {lists.map((list) => {
               return (
@@ -164,6 +194,7 @@ const Sidebar = ({selected, setSelected}) => {
                   icon={<FormatListBulletedOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
+                  setIsCollapsed={setIsCollapsed}
                 />
               )
             })}

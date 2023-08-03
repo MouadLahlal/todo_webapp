@@ -3,13 +3,13 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { forwardRef, useState } from 'react';
-import { postNewTask } from '../api/tasks';
+import { putEditList } from '../api/lists';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Popup({task, setModalOpen, open, setOpen}) {
+export default function Popup({oldlistName, newlistName, setModalOpen, open, setOpen}) {
   const handleClick = () => {
     setOpen(true);
   };
@@ -23,7 +23,8 @@ export default function Popup({task, setModalOpen, open, setOpen}) {
   };
 
   const handleSubmit = async () => {
-    const added = await postNewTask(task.task, task.note, task.date, task.priority, task.list);
+    const added = await putEditList(oldlistName, newlistName);
+    console.log(added);
     if (added.ok) {
       setOpen(true);
       setModalOpen(false);
@@ -37,7 +38,7 @@ export default function Popup({task, setModalOpen, open, setOpen}) {
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%', fontSize: '16px', fontWeight: 'bold' }}>
-          Task successfully created!
+          List edited successfully
         </Alert>
       </Snackbar>
     </Stack>

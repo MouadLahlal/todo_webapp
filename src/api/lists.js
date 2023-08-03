@@ -7,7 +7,8 @@ export const getAllLists = async () => {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
     });
-    return await response.json();
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
 }
 
 export const postNewList = async (name) => {
@@ -22,5 +23,22 @@ export const postNewList = async (name) => {
             "name":"${name}"
         }`
     });
-    return await response.json();
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
+}
+
+export const putEditList = async (oldname, newname) => {
+    const url = `${apiData.apiHost}/lists/edit/${oldname}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: `{
+            "newname":"${newname}"
+        }`
+    });
+    let res = {body: await response.json(), ok:response.ok};
+    return res;
 }

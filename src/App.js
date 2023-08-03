@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     async function req() {
       const logged = await postCheckLogged();
-      if (logged.status) {
+      if (logged.ok) {
         setIsLogged(true);
       }
     }
@@ -31,6 +31,7 @@ function App() {
 
   useEffect(() => {
     let page = `${location.pathname.charAt(1).toUpperCase()}${location.pathname.replace("/", "").substring(1, location.pathname.length-1)}`
+    // let page = location.pathname.substring(location.pathname.lastIndexOf('/')+1, location.pathname.length).replaceAll('%20', " ")
     setSelected(page);
   }, [location]);
 

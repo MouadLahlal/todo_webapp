@@ -21,7 +21,7 @@ const Important = () => {
   useEffect(() => {
     const req = async () => {
       let response = await getImportantTask();
-      setTasks(response.content);
+      setTasks(response.body.content);
     }
     
     req();
@@ -35,12 +35,10 @@ const Important = () => {
       newChecked.push(task.task);
       const done = await postDone(task.idtask);
       task.done = 1;
-      console.log(done);
     } else {
       newChecked.splice(currentIndex, 1);
       const undone = await postUndone(task.idtask);
       task.done = 0;
-      console.log(undone);
     }
 
     setChecked(newChecked);
@@ -69,11 +67,11 @@ const Important = () => {
           {tasks && tasks.map((task) => {
             const labelId = task.idtask;
             let temp = new Date(task.expiration);
-            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate()}`;
+            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate() <= 8 ? "0":""}${temp.getDate()}`;
 
             return (
               <ListItem
-                key={task}
+                key={labelId}
                 secondaryAction={
                   <>
                     <EditTaskModal taskOBJ={task} openPopup={openPopup} setOpenPopup={setOpenPopup} />

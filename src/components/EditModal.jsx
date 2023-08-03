@@ -26,8 +26,8 @@ export default function EditTaskModal({taskOBJ, openPopup, setOpenPopup}) {
   useEffect(() => {
     async function req() {
       const response = await getAllLists();
-      if (response.status) {
-        setLists(response.content);
+      if (response.ok) {
+        setLists(response.body.content);
       }
     }
     req();
@@ -43,8 +43,7 @@ export default function EditTaskModal({taskOBJ, openPopup, setOpenPopup}) {
 
   const handleSubmit = async () => {
     const added = await postEditTask({idtask, task, note, expiration, priority, done, list});
-    console.log(added);
-    if (added.status) {
+    if (added.ok) {
       setOpenPopup(true);
       setOpen(false);
     }

@@ -21,7 +21,7 @@ const Today = () => {
   useEffect(() => {
     const req = async () => {
       let response = await getTodaysTask();
-      setTasks(response.content);
+      setTasks(response.body.content);
     }
     
     req();
@@ -67,11 +67,11 @@ const Today = () => {
           {tasks && tasks.map((task) => {
             const labelId = task.idtask;
             let temp = new Date(task.expiration);
-            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate()}`;
+            task.expiration = `${temp.getFullYear()}-${temp.getMonth() <= 8 ? "0":""}${temp.getMonth()+1}-${temp.getDate() <= 8 ? "0":""}${temp.getDate()}`;
 
             return (
               <ListItem
-                key={task}
+                key={labelId}
                 secondaryAction={
                   <>
                     <EditTaskModal taskOBJ={task} openPopup={openPopup} setOpenPopup={setOpenPopup} />

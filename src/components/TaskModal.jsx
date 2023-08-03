@@ -25,8 +25,8 @@ export default function NewTaskModal() {
   useEffect(() => {
     async function req() {
       const response = await getAllLists();
-      if (response.status) {
-        setLists(response.content);
+      if (response.ok) {
+        setLists(response.body.content);
       }
     }
     req();
