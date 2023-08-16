@@ -27,13 +27,13 @@ const User = () => {
         if (!changed.ok) {
             alert('different')
             usrOk = false;
-        }
+        } else localStorage.setItem('username', values.username);
     }
     if (values.email != localStorage.getItem('email')) {
         let changed = await putChangeEmail(values.email);
         if (!changed.ok) {
             emlOk = false;
-        }
+        } else localStorage.setItem('email', values.email);
     }
     let response = "";
     response += usrOk ? "Username " : "";
