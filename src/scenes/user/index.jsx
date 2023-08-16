@@ -261,19 +261,31 @@ const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const emailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 const checkoutUsrEmlSchema = yup.object().shape({
-    username: yup.string().required("required"),
+    username: yup
+        .string()
+        .required("required")
+        .nullable(),
     email: yup
-        .string().required("required")
-        .matches(emailRegExp, 'You must enter a valid e-mail'),
+        .string()
+        .required("required")
+        .matches(emailRegExp, 'You must enter a valid e-mail')
+        .nullable(),
 });
 const checkoutPswSchema = yup.object().shape({
-    oldpassword: yup.string().required("required"),
+    oldpassword: yup
+        .string()
+        .required("required")
+        .nullable(),
     newpassword: yup
-        .string().required("required")
-        .matches(passwordRegExp, 'Password must contain at least 8 characters and one number.'),
+        .string()
+        .required("required")
+        .matches(passwordRegExp, 'Password must contain at least 8 characters and one number.')
+        .nullable(),
     confnewpassword: yup
-        .string().required("required")
-        .oneOf([yup.ref('newpassword')], "Passwords don't match"),
+        .string()
+        .required("required")
+        .oneOf([yup.ref('newpassword')], "Passwords don't match")
+        .nullable(),
 })
 const initialUsrEmlValues = {
     username: await localStorage.getItem('username'),
