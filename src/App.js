@@ -11,6 +11,7 @@ import Signup from "./scenes/auth/signup";
 import { postCheckLogged } from "./api/auth";
 import Important from "./scenes/important";
 import UList from "./scenes/list";
+import User from "./scenes/user";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -45,12 +46,13 @@ function App() {
               <>
                 <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} />
                 <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
-                  <Topbar setIsSidebar={setIsSidebar} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={true} />
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/today" element={<Today />} />
                     <Route path="/important" element={<Important />} />
                     <Route path="/lists/:list" element={<UList />} />
+                    <Route path="/user" element={<User />} />
                     <Route path="*" element={<Navigate to={'/dashboard'} replace />} />
                   </Routes>
                 </main>
@@ -58,7 +60,7 @@ function App() {
             :
               <>
                 <main className="content">
-                  <Topbar setIsSidebar={setIsSidebar} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={false} />
                   <Routes>
                     <Route path="/login" element={<Login setlogged={setIsLogged}/>} />
                     <Route path="/signup" element={<Signup />} />

@@ -27,7 +27,7 @@ export const postNewList = async (name) => {
     return res;
 }
 
-export const putEditList = async (oldname, newname) => {
+export const putEditList = async (oldname, newname, newicon) => {
     const url = `${apiData.apiHost}/lists/edit/${oldname}`;
     const response = await fetch(url, {
         method: 'PUT',
@@ -36,7 +36,8 @@ export const putEditList = async (oldname, newname) => {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         },
         body: `{
-            "newname":"${newname}"
+            "newname":"${newname}",
+            "newicon":"${newicon}"
         }`
     });
     let res = {body: await response.json(), ok:response.ok};
