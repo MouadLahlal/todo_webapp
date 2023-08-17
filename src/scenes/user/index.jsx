@@ -74,7 +74,7 @@ const User = () => {
           <form onSubmit={handleSubmit} onReset={handleReset}>
             <Typography
                 variant="h3"
-                color={colors.grey[100]}
+                color={colors.greenAccent[400]}
                 fontWeight="bold"
                 sx={{ m: "0 0 5px 0" }}
             >
@@ -147,7 +147,7 @@ const User = () => {
           <form onSubmit={handleSubmit} onReset={handleReset}>
             <Typography
                 variant="h3"
-                color={colors.grey[100]}
+                color={colors.greenAccent[400]}
                 fontWeight="bold"
                 sx={{ m: "0 0 5px 0" }}
             >
