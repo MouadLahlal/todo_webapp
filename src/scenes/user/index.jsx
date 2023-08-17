@@ -8,11 +8,14 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { putChangeEmail, putChangePassword, putChangeUsername } from "../../api/user";
+import { tokens } from "../theme";
 
 const User = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
