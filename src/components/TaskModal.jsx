@@ -117,7 +117,7 @@ export default function NewTaskModal() {
                 select
                 label="List"
                 helperText=""
-                defaultValue=""
+                defaultValue={list}
                 fullWidth
                 onChange={(event) => setList(event.target.value)}
             >

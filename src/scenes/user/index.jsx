@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, InputAdornment, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -8,14 +8,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { putChangeEmail, putChangePassword, putChangeUsername } from "../../api/user";
-import { tokens } from "../../theme";
 
 const User = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -77,7 +74,7 @@ const User = () => {
           <form onSubmit={handleSubmit} onReset={handleReset}>
             <Typography
                 variant="h3"
-                color={colors.greenAccent[400]}
+                color={"#70d8bd"}
                 fontWeight="bold"
                 sx={{ m: "0 0 5px 0" }}
             >
@@ -150,7 +147,7 @@ const User = () => {
           <form onSubmit={handleSubmit} onReset={handleReset}>
             <Typography
                 variant="h3"
-                color={colors.greenAccent[400]}
+                color={"#70d8bd"}
                 fontWeight="bold"
                 sx={{ m: "0 0 5px 0" }}
             >
