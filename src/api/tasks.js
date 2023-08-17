@@ -4,7 +4,7 @@ export const getTodaysTask = async () => {
     const url = `${apiData.apiHost}/lists/getToday`;
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -15,7 +15,7 @@ export const getImportantTask = async () => {
     const url = `${apiData.apiHost}/lists/getImportant`;
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -26,7 +26,7 @@ export const getListTasks = async (listName) => {
     const url = `${apiData.apiHost}/lists/list/${listName}`;
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -46,7 +46,7 @@ export const postNewTask = async (task, note, expiration, priority, list) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: data
     });
@@ -59,7 +59,7 @@ export const postDone = async (idtask) => {
     const response = await fetch(url, {
         method: 'PATCH',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -71,7 +71,7 @@ export const postUndone = async (idtask) => {
     const response = await fetch(url, {
         method: 'PATCH',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -93,7 +93,7 @@ export const postEditTask = async (task) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: data
     });

@@ -4,7 +4,7 @@ export const getAllLists = async () => {
     const url = `${apiData.apiHost}/lists/getAll`;
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         }
     });
     let res = {body: await response.json(), ok:response.ok};
@@ -17,7 +17,7 @@ export const postNewList = async (name) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: `{
             "name":"${name}"
@@ -33,7 +33,7 @@ export const putEditList = async (oldname, newname, newicon) => {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: `{
             "newname":"${newname}",

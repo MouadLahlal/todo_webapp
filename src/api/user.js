@@ -9,7 +9,7 @@ export const putChangeUsername = async (username) => {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: data
     });
@@ -26,7 +26,7 @@ export const putChangeEmail = async (email) => {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: data
     });
@@ -44,7 +44,7 @@ export const putChangePassword = async (oldPassword, newPassword) => {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
         body: data
     });
