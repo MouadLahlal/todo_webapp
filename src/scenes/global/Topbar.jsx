@@ -8,7 +8,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import NewTaskModal from "../../components/TaskModal";
 
-const Topbar = () => {
+const Topbar = ({logged}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -29,7 +29,11 @@ const Topbar = () => {
 
       {/* ICONS */}
       <Box display="flex">
-        <NewTaskModal />
+        {
+          logged && (
+            <NewTaskModal />
+          )
+        }
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
