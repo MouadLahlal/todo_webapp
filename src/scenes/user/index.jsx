@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { putChangeEmail, putChangePassword, putChangeUsername } from "../../api/user";
-import { tokens } from "../theme";
+import { tokens } from "../../theme";
 
 const User = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
