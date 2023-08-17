@@ -45,7 +45,7 @@ function App() {
               <>
                 <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} />
                 <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
-                  <Topbar setIsSidebar={setIsSidebar} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={isLogged} />
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/today" element={<Today />} />
@@ -58,7 +58,7 @@ function App() {
             :
               <>
                 <main className="content">
-                  <Topbar setIsSidebar={setIsSidebar} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={isLogged} />
                   <Routes>
                     <Route path="/login" element={<Login setlogged={setIsLogged}/>} />
                     <Route path="/signup" element={<Signup />} />
