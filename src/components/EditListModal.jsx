@@ -46,7 +46,7 @@ export default function EditListModal({listName, open, setOpen}) {
                 type="text"
                 autoComplete='off'
                 fullWidth
-                value={list}
+                value={listName}
                 onChange={(event) => setList(event.target.value)}
             />
         </DialogContent>

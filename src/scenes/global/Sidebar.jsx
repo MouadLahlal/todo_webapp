@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import MoveToInboxOutlinedIcon from '@mui/icons-material/MoveToInboxOutlined';
@@ -16,25 +15,25 @@ import { getAllLists } from "../../api/lists";
 import NewListModal from "../../components/ListModal";
 import EditListModal from "../../components/EditListModal";
 
-const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed }) => {
+const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed, modal }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [cleanSelected, setCleanSelected] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
-  // let listForEdit = "";
   const handleClick = async (e) => {
     e.preventDefault();
     if (window.innerWidth <= 768) await setIsCollapsed(true);
-    setSelected(title);
     navigate(to);
+    setTimeout(() => {
+      setSelected(title);
+    }, 50);
     if (e.type === 'click') {
     } else if (e.type === 'contextmenu') {
       if (e.target.pathname !== '/dashboard' 
       && e.target.pathname !== '/today' 
       && e.target.pathname !== '/important' 
       && e.target.pathname !== '/lists/Inbox') {
-        setModalOpen(true);
+        modal.setModalOpen(true)
       }
     }
   }
@@ -53,12 +52,12 @@ const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed }) => {
     >
       <Typography>{title}</Typography>
       <Link to={to} />
-      <EditListModal listName={title} open={modalOpen} setOpen={setModalOpen} />
+      {/* <EditListModal listName={title} open={modalOpen} setOpen={setModalOpen} /> */}
     </MenuItem>
   );
 };
 
-const Sidebar = ({selected, setSelected}) => {
+const Sidebar = ({selected, setSelected, modal}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 768 ? true : false);
@@ -147,6 +146,7 @@ const Sidebar = ({selected, setSelected}) => {
               selected={selected}
               setSelected={setSelected}
               setIsCollapsed={setIsCollapsed}
+              modal={modal}
             />
             <Item
               title="Today"
@@ -155,6 +155,7 @@ const Sidebar = ({selected, setSelected}) => {
               selected={selected}
               setSelected={setSelected}
               setIsCollapsed={setIsCollapsed}
+              modal={modal}
             />
             <Item
               title="Important"
@@ -163,6 +164,7 @@ const Sidebar = ({selected, setSelected}) => {
               selected={selected}
               setSelected={setSelected}
               setIsCollapsed={setIsCollapsed}
+              modal={modal}
             />
 
             {!isCollapsed && 
@@ -184,6 +186,7 @@ const Sidebar = ({selected, setSelected}) => {
               selected={selected}
               setSelected={setSelected}
               setIsCollapsed={setIsCollapsed}
+              modal={modal}
             />
             {lists.map((list) => {
               return (
@@ -195,6 +198,7 @@ const Sidebar = ({selected, setSelected}) => {
                   selected={selected}
                   setSelected={setSelected}
                   setIsCollapsed={setIsCollapsed}
+                  modal={modal}
                 />
               )
             })}

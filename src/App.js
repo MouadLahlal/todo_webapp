@@ -11,12 +11,14 @@ import Signup from "./scenes/auth/signup";
 import { postCheckLogged } from "./api/auth";
 import Important from "./scenes/important";
 import UList from "./scenes/list";
+import EditListModal from "./components/EditListModal";
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const [selected, setSelected] = useState(`${window.location.pathname.charAt(1).toUpperCase()}${window.location.pathname.replace("/", "").substring(1, window.location.pathname.length-1)}`);
+  const [modalOpen, setModalOpen] = useState(false);
   const location = useLocation();
   
   useEffect(() => {
@@ -32,6 +34,7 @@ function App() {
   useEffect(() => {
     let page = `${location.pathname.charAt(1).toUpperCase()}${location.pathname.replace("/", "").substring(1, location.pathname.length-1)}`
     // let page = location.pathname.substring(location.pathname.lastIndexOf('/')+1, location.pathname.length).replaceAll('%20', " ")
+    // alert(page);
     setSelected(page);
   }, [location]);
 
@@ -43,7 +46,7 @@ function App() {
           {isLogged
             ? 
               <>
-                <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} />
+                <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} modal={{modalOpen, setModalOpen}} />
                 <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
                   <Topbar setIsSidebar={setIsSidebar} logged={isLogged} />
                   <Routes>
@@ -53,6 +56,7 @@ function App() {
                     <Route path="/lists/:list" element={<UList />} />
                     <Route path="*" element={<Navigate to={'/dashboard'} replace />} />
                   </Routes>
+                  <EditListModal listName={selected} open={modalOpen} setOpen={setModalOpen} />
                 </main>
               </> 
             :
