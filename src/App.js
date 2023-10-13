@@ -11,6 +11,7 @@ import Signup from "./scenes/auth/signup";
 import { postCheckLogged } from "./api/auth";
 import Important from "./scenes/important";
 import UList from "./scenes/list";
+import EditListModal from "./components/EditListModal";
 import User from "./scenes/user";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const [isLogged, setIsLogged] = useState(false);
   const [selected, setSelected] = useState(`${window.location.pathname.charAt(1).toUpperCase()}${window.location.pathname.replace("/", "").substring(1, window.location.pathname.length-1)}`);
+  const [modalOpen, setModalOpen] = useState(false);
   const location = useLocation();
   
   useEffect(() => {
@@ -33,6 +35,7 @@ function App() {
   useEffect(() => {
     let page = `${location.pathname.charAt(1).toUpperCase()}${location.pathname.replace("/", "").substring(1, location.pathname.length-1)}`
     // let page = location.pathname.substring(location.pathname.lastIndexOf('/')+1, location.pathname.length).replaceAll('%20', " ")
+    // alert(page);
     setSelected(page);
   }, [location]);
 
@@ -44,9 +47,9 @@ function App() {
           {isLogged
             ? 
               <>
-                <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} />
+                <Sidebar isSidebar={isSidebar} selected={selected} setSelected={setSelected} modal={{modalOpen, setModalOpen}} />
                 <main className="content" style={{  maxHeight: "100%", overflowY: "scroll",}}>
-                  <Topbar setIsSidebar={setIsSidebar} logged={true} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={isLogged} />
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/today" element={<Today />} />
@@ -55,12 +58,13 @@ function App() {
                     <Route path="/user" element={<User />} />
                     <Route path="*" element={<Navigate to={'/dashboard'} replace />} />
                   </Routes>
+                  <EditListModal listName={selected} open={modalOpen} setOpen={setModalOpen} />
                 </main>
               </> 
             :
               <>
                 <main className="content">
-                  <Topbar setIsSidebar={setIsSidebar} logged={false} />
+                  <Topbar setIsSidebar={setIsSidebar} logged={isLogged} />
                   <Routes>
                     <Route path="/login" element={<Login setlogged={setIsLogged}/>} />
                     <Route path="/signup" element={<Signup />} />

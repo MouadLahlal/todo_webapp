@@ -31,6 +31,11 @@ const Topbar = ({logged}) => {
 
       {/* ICONS */}
       <Box display="flex">
+        {
+          logged && (
+            <NewTaskModal />
+          )
+        }
         {logged && (
           <>
             <NewTaskModal />
@@ -52,6 +57,15 @@ const Topbar = ({logged}) => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
+{/*         <IconButton>
+          <NotificationsOutlinedIcon />
+        </IconButton>
+        <IconButton>
+          <SettingsOutlinedIcon />
+        </IconButton>
+        <IconButton>
+          <PersonOutlinedIcon />
+        </IconButton> */}
       </Box>
     </Box>
   );
