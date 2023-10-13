@@ -70,7 +70,7 @@ export default function EditListModal({listName, currentIcon, open, setOpen}) {
                 type="text"
                 autoComplete='off'
                 fullWidth
-                value={listName}
+                value={list}
                 onChange={(event) => setList(event.target.value)}
             />
             <TextField

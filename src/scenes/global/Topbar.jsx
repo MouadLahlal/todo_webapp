@@ -33,23 +33,14 @@ const Topbar = ({logged}) => {
       <Box display="flex">
         {
           logged && (
-            <NewTaskModal />
+            <>
+              <NewTaskModal />
+              <IconButton onClick={() => navigate('/user')}>
+                <PersonOutlinedIcon />
+              </IconButton>
+            </>
           )
         }
-        {logged && (
-          <>
-            <NewTaskModal />
-            <IconButton>
-              <NotificationsOutlinedIcon />
-            </IconButton>
-            <IconButton>
-              <SettingsOutlinedIcon />
-            </IconButton>
-            <IconButton onClick={() => navigate('/user')}>
-              <PersonOutlinedIcon />
-            </IconButton>
-          </>
-        )}
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />
