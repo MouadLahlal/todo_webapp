@@ -8,6 +8,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import MoveToInboxOutlinedIcon from '@mui/icons-material/MoveToInboxOutlined';
+import * as icons from '@mui/icons-material';
 
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
 import TodayIcon from '@mui/icons-material/Today';
@@ -15,7 +16,7 @@ import { getAllLists } from "../../api/lists";
 import NewListModal from "../../components/ListModal";
 import EditListModal from "../../components/EditListModal";
 
-const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed, modal }) => {
+const Item = ({ title, to, icon, iconString, selected, setSelected, setIsCollapsed, modal }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [cleanSelected, setCleanSelected] = useState("");
@@ -23,19 +24,22 @@ const Item = ({ title, to, icon, selected, setSelected, setIsCollapsed, modal })
   const handleClick = async (e) => {
     e.preventDefault();
     if (window.innerWidth <= 768) await setIsCollapsed(true);
+    setSelected(title);
     navigate(to);
     setTimeout(() => {
       setSelected(title);
     }, 50);
     if (e.type === 'click') {
+      if (window.innerWidth <= 768) await setIsCollapsed(true);
     } else if (e.type === 'contextmenu') {
-      if (e.target.pathname !== '/dashboard' 
+      if (e.target.pathname !== '/dashboard'
       && e.target.pathname !== '/today' 
       && e.target.pathname !== '/important' 
       && e.target.pathname !== '/lists/Inbox') {
         modal.setModalOpen(true)
       }
     }
+    // if (window.innerWidth <= 768) await setIsCollapsed(true);
   }
   useEffect(() => {
     setCleanSelected(selected.substring(selected.lastIndexOf('/')+1, selected.length).replaceAll('%20', " "));
@@ -63,6 +67,11 @@ const Sidebar = ({selected, setSelected, modal}) => {
   const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 768 ? true : false);
   // const [selected, setSelected] = useState(`${window.location.pathname.charAt(1).toUpperCase()}${window.location.pathname.replace("/", "").substring(1, window.location.pathname.length-1)}`);
   const [lists, setLists] = useState([]);
+
+  const Icon = ({desiredIcon}) => {
+    const Temp = icons[desiredIcon];
+    return ( <Temp /> )
+  }
 
   useEffect(() => {
     async function req() {
@@ -132,7 +141,7 @@ const Sidebar = ({selected, setSelected, modal}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Your Name
+                  Welcome { localStorage.getItem('username').toUpperCase() }
                 </Typography>
               </Box>
             </Box>
@@ -194,7 +203,9 @@ const Sidebar = ({selected, setSelected, modal}) => {
                   key={list.idlist}
                   title={list.name}
                   to={`/lists/${list.name}`}
-                  icon={<FormatListBulletedOutlinedIcon />}
+                  // icon={<FormatListBulletedOutlinedIcon />}
+                  icon={<Icon desiredIcon={list.icon} />}
+                  iconString={list.icon}
                   selected={selected}
                   setSelected={setSelected}
                   setIsCollapsed={setIsCollapsed}

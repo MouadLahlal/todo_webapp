@@ -87,6 +87,7 @@ export default function NewTaskModal() {
                 margin='dense'
                 id='date'
                 type='date'
+                label={window.innerWidth <= 768 ? "Date" : ""}
                 fullWidth
                 onChange={(event) => setDate(event.target.value)}
             />
@@ -116,7 +117,7 @@ export default function NewTaskModal() {
                 select
                 label="List"
                 helperText=""
-                defaultValue=""
+                defaultValue={list}
                 fullWidth
                 onChange={(event) => setList(event.target.value)}
             >

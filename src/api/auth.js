@@ -41,7 +41,7 @@ export const postCheckLogged = async () => {
         method: 'POST',
         headers: {
             'Contet-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+            'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`,
         },
     });
     let res = {body: await response.json(), ok:response.ok};

@@ -9,7 +9,7 @@ const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Popup({oldlistName, newlistName, setModalOpen, open, setOpen}) {
+export default function Popup({oldlistName, newlistName, newicon, setModalOpen, open, setOpen}) {
   const handleClick = () => {
     setOpen(true);
   };
@@ -23,7 +23,7 @@ export default function Popup({oldlistName, newlistName, setModalOpen, open, set
   };
 
   const handleSubmit = async () => {
-    const added = await putEditList(oldlistName, newlistName);
+    const added = await putEditList(oldlistName, newlistName, newicon);
     console.log(added);
     if (added.ok) {
       setOpen(true);

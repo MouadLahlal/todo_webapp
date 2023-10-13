@@ -7,11 +7,13 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import NewTaskModal from "../../components/TaskModal";
+import { useNavigate } from "react-router-dom";
 
 const Topbar = ({logged}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const navigate = useNavigate();
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
@@ -34,6 +36,20 @@ const Topbar = ({logged}) => {
             <NewTaskModal />
           )
         }
+        {logged && (
+          <>
+            <NewTaskModal />
+            <IconButton>
+              <NotificationsOutlinedIcon />
+            </IconButton>
+            <IconButton>
+              <SettingsOutlinedIcon />
+            </IconButton>
+            <IconButton onClick={() => navigate('/user')}>
+              <PersonOutlinedIcon />
+            </IconButton>
+          </>
+        )}
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (
             <DarkModeOutlinedIcon />

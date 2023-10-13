@@ -1,44 +1,52 @@
-import { apiData } from './settings';
+import { apiData } from "./settings";
 
-export const getAllLists = async () => {
-    const url = `${apiData.apiHost}/lists/getAll`;
+export const putChangeUsername = async (username) => {
+    const url = `${apiData.apiHost}/user/changeUsername`;
+    const data = `{
+        "newUsername":"${username}"
+    }`
     const response = await fetch(url, {
+        method: 'PATCH',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
-        }
+        },
+        body: data
     });
     let res = {body: await response.json(), ok:response.ok};
     return res;
 }
 
-export const postNewList = async (name) => {
-    const url = `${apiData.apiHost}/lists/add`;
+export const putChangeEmail = async (email) => {
+    const url = `${apiData.apiHost}/user/changeEmail`;
+    const data = `{
+        "newEmail":"${email}"
+    }`;
     const response = await fetch(url, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
-        body: `{
-            "name":"${name}"
-        }`
+        body: data
     });
     let res = {body: await response.json(), ok:response.ok};
     return res;
 }
 
-export const putEditList = async (oldname, newname, newicon) => {
-    const url = `${apiData.apiHost}/lists/edit/${oldname}`;
+export const putChangePassword = async (oldPassword, newPassword) => {
+    const url = `${apiData.apiHost}/user/changePassword`;
+    const data = `{
+        "oldPassword":"${oldPassword}",
+        "newPassword":"${newPassword}"
+    }`;
     const response = await fetch(url, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${await localStorage.getItem('accessToken')}`
         },
-        body: `{
-            "newname":"${newname}",
-            "newicon":"${newicon}"
-        }`
+        body: data
     });
     let res = {body: await response.json(), ok:response.ok};
     return res;

@@ -113,7 +113,7 @@ const Dashboard = () => {
         >
           <StatBox
             title={stats.todCompTasks}
-            subtitle="Today's Completed Tasks"
+            subtitle="Task Completed Today"
             progress="0.30"
             increase="+5%"
             icon={

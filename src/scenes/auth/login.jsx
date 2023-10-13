@@ -24,6 +24,8 @@ const Login = ({setlogged}) => {
     let logged = await postLogin(values.username.toString(), values.password.toString());
     if (logged.ok) {
       localStorage.setItem('accessToken', logged.body.accessToken);
+      localStorage.setItem('username', logged.body.username);
+      localStorage.setItem('email', logged.body.email);
       setlogged(true);
       navigate('/dashboard');
     }

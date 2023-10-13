@@ -12,6 +12,7 @@ import { postCheckLogged } from "./api/auth";
 import Important from "./scenes/important";
 import UList from "./scenes/list";
 import EditListModal from "./components/EditListModal";
+import User from "./scenes/user";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -54,6 +55,7 @@ function App() {
                     <Route path="/today" element={<Today />} />
                     <Route path="/important" element={<Important />} />
                     <Route path="/lists/:list" element={<UList />} />
+                    <Route path="/user" element={<User />} />
                     <Route path="*" element={<Navigate to={'/dashboard'} replace />} />
                   </Routes>
                   <EditListModal listName={selected} open={modalOpen} setOpen={setModalOpen} />
