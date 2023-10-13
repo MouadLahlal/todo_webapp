@@ -29,7 +29,9 @@ function App() {
         setIsLogged(true);
       }
     }
-    req();
+    if (localStorage.getItem('accessToken')) {
+      req();
+    }
   }, []);
 
   useEffect(() => {

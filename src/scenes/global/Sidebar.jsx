@@ -73,16 +73,21 @@ const Sidebar = ({selected, setSelected, modal}) => {
     return ( <Temp /> )
   }
 
-  useEffect(() => {
-    async function req() {
-      const response = await getAllLists();
-      if (response.ok) {
-        setLists(response.body.content);
-        console.log(response.body.content);
-      }
+  async function req() {
+    const response = await getAllLists();
+    if (response.ok) {
+      setLists(response.body.content);
+      console.log(response.body.content);
     }
+  }
+
+  useEffect(() => {
     req();
   }, []);
+
+  useEffect(() => {
+    req();
+  }, [modal.modalOpen]);
 
   return (
     <Box
@@ -142,8 +147,7 @@ const Sidebar = ({selected, setSelected, modal}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {/* Welcome { localStorage.getItem('username').toUpperCase() } */}
-                  WELCOME
+                  Welcome { localStorage.getItem('username').toUpperCase() }
                 </Typography>
               </Box>
             </Box>
