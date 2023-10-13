@@ -78,6 +78,7 @@ const Sidebar = ({selected, setSelected, modal}) => {
       const response = await getAllLists();
       if (response.ok) {
         setLists(response.body.content);
+        console.log(response.body.content);
       }
     }
     req();
@@ -141,7 +142,8 @@ const Sidebar = ({selected, setSelected, modal}) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Welcome { localStorage.getItem('username').toUpperCase() }
+                  {/* Welcome { localStorage.getItem('username').toUpperCase() } */}
+                  WELCOME
                 </Typography>
               </Box>
             </Box>

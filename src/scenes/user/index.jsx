@@ -129,6 +129,8 @@ const User = () => {
         )}
       </Formik>
 
+      <Box padding="30px"></Box>
+
       <Formik
         onSubmit={handlePswFormSubmit}
         // onReset={(values, formProps) => { return window.confirm('Reset?'); }}
